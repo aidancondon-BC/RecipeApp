@@ -1,0 +1,68 @@
+#:kivy 1.0
+#:import NoTransition kivy.uix.screenmanager.NoTransition
+
+<MainWindow>:
+    MDToolbar:
+        title: "Recipe Selector"
+        md_bg_color: 0.5, 0.7, 0.7, 1
+        specific_text_color: 0, 0, 0, 1
+    WindowManager:
+        id: WM
+        transition: NoTransition()
+        WelcomePage:
+            id: welcome
+            name: 'welcome'
+        IngredientsPage:
+            id: ingredients
+            name: 'ingredients'
+        EndPage:            
+            id: end
+            name: 'end'
+
+
+<WelcomePage>:
+    Label:
+        id: welmessage
+        text: 'WELCOME TO RECIPE MAKER'
+        font_size: 90
+        color: 'black'
+        pos_hint: {'center_x': 0.5, 'center_y': 0.67}
+    Button:
+        id: toNext
+        text: 'Click to Start'
+        size_hint: (0.4, 0.05)
+        pos_hint: {'center_x': 0.5, 'center_y': 0.53}
+        on_press: app.root.ids.WM.current = 'ingredients'
+
+<IngredientsPage>:
+    BoxLayout:
+        orientation: 'horizontal'
+        id: bx
+    StackLayout:
+        id: anchor
+        orientation: 'lr-tb'
+        TextInput:
+            id: searchBar
+            hint_text: 'Enter Ingredients'
+            size_hint: (0.25, 0.05)
+            on_text: app.root.implementSearchResults()
+        Button:
+            id: continue
+            size_hint: (0.25, 0.05) 
+            text: 'continue'
+            on_press: app.root.ids.WM.current = 'end'
+        Button:
+            id: numSelected
+            size_hint: (0.5, 0.05) 
+            color: 'black'
+        ScrollView:
+            id: searchResults
+            size_hint: (0.5, 0.95)
+        ScrollView:
+            id: selected
+            size_hint: (0.5, 0.95)
+            GridLayout:
+                id: grd
+                rows: 10
+                cols: 1
+
